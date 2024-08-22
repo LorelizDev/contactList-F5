@@ -8,7 +8,15 @@
 </head>
 <body>
     <h1>Mi lista de Contactos</h1>
-    <div class="container" id="container"></div>
+    <ul class="contactList" id="contactList">
+        <li class="contact">
+            <p class="title">Contacto nº <span class="idContact">contact.id</span></p>
+            <p class="title">Nombre: <span class="name">contact.name</span></p>
+            <p class="title">Teléfono: <span class="phone">contact.phone</span></p>
+            <p class="title">Correo electrónico: <span class="email">contact.email</span></p>
+            <button id="contactId"><i class="fa-solid fa-trash"></i></button>
+        </li>
+    </ul>
     <script src="src/services.js"></script>
 </body>
 </html>

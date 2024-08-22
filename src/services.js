@@ -2,6 +2,7 @@
 const baseUrl = "http://localhost:3000/contacts";
 
 // READ - method GET - endpoint: http://localhost:3000/contacts
+// Traer todos los contactos
 async function getAllContacts() {
     const response = await fetch(baseUrl, {
         method: "GET",
@@ -14,8 +15,9 @@ async function getAllContacts() {
     return data;
 }
 
+// READ - method GET - Traer un contacto por su id
 async function getOneContact(id) {
-    const response = await fetch(`baseUrl/${id}`, {
+    const response = await fetch(`${baseUrl}/${id}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json"
@@ -28,7 +30,7 @@ async function getOneContact(id) {
 
 // DELETE - method DELETE - endpoint: http://localhost:3000/contacts/<id>
 async function deleteContact(id) {
-    const response = await fetch(`baseUrl/${id}`, {
+    const response = await fetch(`${baseUrl}/${id}`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json"
@@ -36,7 +38,7 @@ async function deleteContact(id) {
     });
 
     if (response.ok) {
-        getTasks();
+        getAllContacts();
       } else {
         console.error("Error while deleting contact");
       }
@@ -64,7 +66,7 @@ async function createContact(name, phone, email) {
 
 // UPDATE - method PUT - endpoint: http://localhost:3000/contacts/<id>
 async function updateContact(id, name, phone, email) {
-    const response = await fetch(`baseUrl/${id}`, {
+    const response = await fetch(`${baseUrl}/${id}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
@@ -82,23 +84,41 @@ async function updateContact(id, name, phone, email) {
 // updateContact(2, "Lulu", "1234", "lulu@mail.com")
 
 function showContacts(contacts) {
-    const list = document.getElementById("container");
+    const list = document.getElementById("contactList");
     list.innerHTML = "";
     
     const contactList = contacts.map(contact => {
-        list.innerHTML += `
-        <div class="contact">
+        // Crea un elemento li para cada contacto
+        const contactLi = document.createElement("li");
+        // Añade el id al li
+        contactLi.setAttribute('data-id', contact.id);
+        
+        // Plantilla de cada contacto
+        contactLi.innerHTML += `
             <p class="title">Contacto nº <span class="idContact">${contact.id}</span></p>
             <p class="title">Nombre: <span class="name">${contact.name}</span></p>
             <p class="title">Teléfono: <span class="phone">${contact.phone}</span></p>
             <p class="title">Correo electrónico: <span class="email">${contact.email}</span></p>
-            <button type="button" id="contact${contact.id}"><i class="fa-solid fa-trash"></i></button>
-        </div>
-        `
-        const deleteButton = document.getElementById(`contact${contact.id}`)
-        deleteButton.addEventListener('click', () => {
-            deleteContact(contact.id);
-        });
+        `;
+
+        // Botón eliminar contacto
+        const deleteButton = document.createElement("button"); // Crea el botón
+        // Añade un evento al hacer click en el botón para que ejecute la función deleteContact
+        deleteButton.addEventListener("click", () => deleteContact(contact.id))
+        
+        // Icono de bote de basura
+        const trashIcon = document.createElement("i"); // Crea el icono
+        // Añadimos la clase "fa-solid fa-trash" para que se pinte el icono de bote de basura, pero como son 2 clases (estan separadas por espacio), debemos pasar cada una como argumento
+        trashIcon.classList.add("fa-solid", "fa-trash");
+        
+        // Agregar el icono trash al botón eliminar
+        deleteButton.appendChild(trashIcon);
+        
+        // Agregar los botones al div contact
+        contactLi.appendChild(deleteButton);
+
+        // Agregar cada contactLi a la lista
+        list.appendChild(contactLi)
     });
 };
 
