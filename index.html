@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/2cf1b682c5.js" crossorigin="anonymous"></script>
-    <title>Document</title>
+    <title>Lista de Contactos</title>
 </head>
 <body>
     <h1>Mi lista de Contactos</h1>
@@ -22,18 +22,10 @@
                 <label for="emailContact">Correo eletrónico:</label>
                 <input type="text" name="emailContact" id="emailContact">
             </div>
-            <button type="submit" id="addContact">Añadir Contacto</button>
+            <button type="button" id="addContact" onclick="createContact()">Añadir Contacto</button>
         </form>
     </article>
-    <ul class="contactList" id="contactList">
-        <li class="contact">
-            <p class="title">Contacto nº <span class="idContact">contact.id</span></p>
-            <p class="title">Nombre: <span class="name">contact.name</span></p>
-            <p class="title">Teléfono: <span class="phone">contact.phone</span></p>
-            <p class="title">Correo electrónico: <span class="email">contact.email</span></p>
-            <button id="contactId"><i class="fa-solid fa-trash"></i></button>
-        </li>
-    </ul>
+    <ul class="contactList" id="contactList"></ul>
     <script src="src/services.js"></script>
 </body>
 </html>

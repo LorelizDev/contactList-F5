@@ -1,49 +1,55 @@
 // URL de nuestra Api simulada
-const baseUrl = "http://localhost:3000/contacts";
+const URL_API = "http://localhost:3000/contacts";
 
 // READ - method GET - endpoint: http://localhost:3000/contacts
 // Traer todos los contactos
 async function getAllContacts() {
-	const response = await fetch(baseUrl, {
+	const response = await fetch(URL_API, {
 		method: "GET",
 		headers: {
 			"Content-Type": "application/json",
 		},
 	});
 	const data = await response.json();
-	console.log(data);
 	return data;
 }
 
 // READ - method GET - Traer un contacto por su id
 async function getOneContact(id) {
-	const response = await fetch(`${baseUrl}/${id}`, {
+	const response = await fetch(`${URL_API}/${id}`, {
 		method: "GET",
 		headers: {
 			"Content-Type": "application/json",
 		},
 	});
 	const data = await response.json();
-	console.log(data);
 	return data;
 }
 
 // DELETE - method DELETE - endpoint: http://localhost:3000/contacts/<id>
 async function deleteContact(id) {
-	const response = await fetch(`${baseUrl}/${id}`, {
-		method: "DELETE",
-		headers: {
-			"Content-Type": "application/json",
-		},
-	});
+	// Obtener el contacto a eliminar
+	const contact = await getOneContact(id);
 
-	if (response.ok) {
-		getAllContacts();
+	// Crear un cuadro de confirmación
+	const textConfirm = `¿Estás seguro de eliminar a ${contact.name} de tus contactos?`;
+	if (confirm(textConfirm)) { // Si responde "Aceptar" (true), se hace la petición DELETE
+		const response = await fetch(`${URL_API}/${id}`, {
+			method: "DELETE",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+        if (response.ok) {
+            showContacts();
+        } else {
+            console.error("Error while deleting contact");
+        }
+		console.log(`${contact.name} ya no se encuentra entre tus contactos`);
 	} else {
-		console.error("Error while deleting contact");
+		console.log(`Decidiste darle otra oportunidad a ${contact.name}`);
 	}
 }
-// deleteContact(1)
 
 // CREATE - method POST - endpoint: http://localhost:3000/contacts
 async function createContact() {
@@ -51,7 +57,7 @@ async function createContact() {
 	const phone = document.getElementById("phoneContact");
 	const email = document.getElementById("emailContact");
 
-	const response = await fetch(baseUrl, {
+	const response = await fetch(URL_API, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
@@ -64,7 +70,11 @@ async function createContact() {
 	});
 
 	if (response.ok) {
-		getAllContacts();
+		// Limpiar el contenido de los input
+		name.value = "";
+		phone.value = "";
+		email.value = "";
+		showContacts();
 	} else {
 		console.error("Error while creating contact");
 	}
@@ -72,7 +82,7 @@ async function createContact() {
 
 // UPDATE - method PUT - endpoint: http://localhost:3000/contacts/<id>
 async function updateContact(id, name, phone, email) {
-	const response = await fetch(`${baseUrl}/${id}`, {
+	const response = await fetch(`${URL_API}/${id}`, {
 		method: "PUT",
 		headers: {
 			"Content-Type": "application/json",
@@ -89,47 +99,25 @@ async function updateContact(id, name, phone, email) {
 }
 // updateContact(2, "Lulu", "1234", "lulu@mail.com")
 
-function showContacts(contacts) {
+async function showContacts() {
+	// Seleccionar el elemento ul donde estarán cada contacto en element
 	const list = document.getElementById("contactList");
 	list.innerHTML = "";
-
-	const contactList = contacts.map((contact) => {
-		// Crea un elemento li para cada contacto
-		const contactLi = document.createElement("li");
-		// Añade el id al li
-		contactLi.setAttribute("data-id", contact.id);
-
+	
+	const contacts = await getAllContacts(); // Traer todos los contactos
+	// Recorrer la lista de contactos y mostrar cada uno de ellos
+	contacts.map((contact) => {
 		// Plantilla de cada contacto
-		contactLi.innerHTML += `
-            <p class="title">Contacto nº <span class="idContact">${contact.id}</span></p>
-            <p class="title">Nombre: <span class="name">${contact.name}</span></p>
-            <p class="title">Teléfono: <span class="phone">${contact.phone}</span></p>
-            <p class="title">Correo electrónico: <span class="email">${contact.email}</span></p>
+		list.innerHTML += `
+		<li class="contact">
+            <p class="item-tag">Contacto nº <span class="contact-info">${contact.id}</span></p>
+            <p class="item-tag">Nombre: <span class="contact-info">${contact.name}</span></p>
+			<p class="item-tag">Teléfono: <span class="contact-info">${contact.phone}</span></p>
+            <p class="item-tag">Correo electrónico: <span class="contact-info">${contact.email}</span></p>
+			<button onclick="deleteContact('${contact.id}')"><i class="fa-solid fa-trash"></i></button>
+		</li>
         `;
-
-		// Botón eliminar contacto
-		const deleteButton = document.createElement("button"); // Crea el botón
-		// Añade un evento al hacer click en el botón para que ejecute la función deleteContact
-		deleteButton.addEventListener("click", () => deleteContact(contact.id));
-
-		// Icono de bote de basura
-		const trashIcon = document.createElement("i"); // Crea el icono
-		// Añadimos la clase "fa-solid fa-trash" para que se pinte el icono de bote de basura, pero como son 2 clases (estan separadas por espacio), debemos pasar cada una como argumento
-		trashIcon.classList.add("fa-solid", "fa-trash");
-
-		// Agregar el icono trash al botón eliminar
-		deleteButton.appendChild(trashIcon);
-
-		// Agregar los botones al div contact
-		contactLi.appendChild(deleteButton);
-
-		// Agregar cada contactLi a la lista
-		list.appendChild(contactLi);
 	});
-};
+}
 
-// Añade un evento al hacer click en el botón "Añadir contacto" para que ejecute la función addContact
-const addContact = document.getElementById("addContact");
-addContact.addEventListener("click", () => createContact());
-
-getAllContacts().then(showContacts);
+showContacts();
