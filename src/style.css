@@ -117,6 +117,7 @@ form button {
     border-radius: 10px;
     background-color: var(--main-bg-color);
     color: var(--text-primary-color);
+    cursor: pointer;
 }
 
 /* Lista de contactos */
@@ -125,9 +126,56 @@ form button {
 }
 
 .contact {
+    display: flex;
     list-style: none;
     margin: 20px 0;
     background-color: var(--bg-contact);
     border-radius: 20px;
     padding: 10px;
+    min-height: 60px;
+    align-items: center;
+}
+
+.contact__avatar {
+    font-size: 1.5rem;
+    margin: auto;
+}
+
+.contact__info {
+    display: flex;
+    width: 70%;
+}
+
+details {
+    width: 100%;
+}
+
+summary {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.contact__item-tag {
+    font-size: 0.8rem;
+    color: var(--main-bg-color);
+}
+
+.contact__info-item {
+    font-weight: bold;
+}
+
+details div {
+    margin: 5px 0;
+}
+
+.contact__info__buttons {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+    color: var(--main-bg-color);
+    gap: 10px;
+}
+
+.fa-solid {
+    cursor: pointer;
 }

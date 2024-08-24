@@ -110,12 +110,27 @@ async function showContacts() {
 		// Plantilla de cada contacto
 		list.innerHTML += `
 		<li class="contact">
-            <p class="item-tag">Contacto nº <span class="contact-info">${contact.id}</span></p>
-            <p class="item-tag">Nombre: <span class="contact-info">${contact.name}</span></p>
-			<p class="item-tag">Teléfono: <span class="contact-info">${contact.phone}</span></p>
-            <p class="item-tag">Correo electrónico: <span class="contact-info">${contact.email}</span></p>
-			<button onclick="deleteContact('${contact.id}')"><i class="fa-solid fa-trash"></i></button>
-		</li>
+            <div class="contact__avatar">
+                <i class="fa-solid fa-circle-user fa-2xl"></i>
+            </div>
+            <div class="contact__info">
+                <details>
+                    <summary>${contact.name}</summary>
+                    <div>
+                        <p class="contact__item-tag">Teléfono:</p>
+                        <p class="contact__info-item">${contact.phone}</p>
+                    </div>
+                    <div>
+                        <p class="contact__item-tag">Correo electrónico:</p>
+                        <p class="contact__info-item">${contact.email}</p>
+                    </div>
+                    <div class="contact__info__buttons">
+                        <i class="fa-solid fa-square-pen fa-xl"></i>
+                        <i onclick="deleteContact('${contact.id}')" class="fa-solid fa-trash fa-lg"></i>
+                    </div>
+                </details>
+            </div>
+        </li>
         `;
 	});
 }
