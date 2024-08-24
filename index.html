@@ -4,12 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/2cf1b682c5.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="src/style.css">
     <title>Lista de Contactos</title>
 </head>
 <body>
-    <h1>Mi lista de Contactos</h1>
-    <article>
-        <form action="">
+    <header>
+        <h1>Mi lista de Contactos</h1>
+        <nav>
+            <ul class="menu">
+                <li class="menu__add" onclick="window.modalAddContact.showModal()">Añadir <i class="fa-solid fa-user-plus"></i></li>
+                <li class="menu__filter">Filtrar <i class="fa-solid fa-people-group"></i></li>
+            </ul>
+        </nav>
+    </header>
+    <dialog class="modal" id="modalAddContact">
+        <div class="modal__close">
+            <i class="fa-solid fa-rectangle-xmark" onclick="window.modalAddContact.close()"></i>
+        </div>
+        <form action="" method="dialog">
             <div>
                 <label for="nameContact">Nombre:</label>
                 <input type="text" name="nameContact" id="nameContact">
@@ -22,10 +34,10 @@
                 <label for="emailContact">Correo eletrónico:</label>
                 <input type="text" name="emailContact" id="emailContact">
             </div>
-            <button type="button" id="addContact" onclick="createContact()">Añadir Contacto</button>
+            <button type="button" id="addContact" onclick="createContact()">Añadir</button>
         </form>
-    </article>
-    <ul class="contactList" id="contactList"></ul>
+    </dialog>
+    <ul class="contact-list" id="contactList"></ul>
     <script src="src/services.js"></script>
 </body>
 </html>

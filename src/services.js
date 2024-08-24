@@ -102,7 +102,7 @@ async function updateContact(id, name, phone, email) {
 async function showContacts() {
 	// Seleccionar el elemento ul donde estarán cada contacto en element
 	const list = document.getElementById("contactList");
-	list.innerHTML = "";
+	// list.innerHTML = "";
 	
 	const contacts = await getAllContacts(); // Traer todos los contactos
 	// Recorrer la lista de contactos y mostrar cada uno de ellos

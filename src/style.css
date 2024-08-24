@@ -1,0 +1,133 @@
+/* Variables */
+:root {
+    --text-primary-font: Roboto, 'Open Sans', Montserrat, Nunito;
+    --text-title-font: Georgia, 'Times New Roman', Times, serif;
+    --main-bg-color: #264653;
+    --bg-modal: #fefae0;
+    --bg-contact: #F4A261;
+    --text-primary-color: #f2f2f2;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--main-bg-color);
+    color: var(--text-primary-color);
+    font-family: var(--text-primary-font);
+    font-size: 18px;
+    position: relative;
+}
+
+h1 {
+    font-family: var(--text-title-font);
+    text-align: center;
+    padding: 20px;
+    font-size: 1.8rem;
+    background-color: #E76F51;
+}
+
+/* Estilo de navbar */
+.menu {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.menu li {
+    padding: 20px;
+    list-style: none;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+}
+
+.menu__add {
+    background-color: #2A9D8F;
+}
+
+.menu__filter {
+    background-color: #E9C46A;
+}
+
+/* Cuadro pop-up */
+.modal {
+    position: absolute;
+    top: 20vh;
+    left: 20vw;
+    /* top: calc(50vh - 150px/2);
+    left: calc(50vw - 280px/2);
+    height: 150px;
+    width: 280px; */
+    padding: 5px 5px 10px 10px;
+    background-color: var(--bg-modal);
+    border: 1px solid var(--main-bg-color);
+    border-radius: 10px;
+    box-shadow: 0 0 20px 10px var(--main-bg-color);
+}
+
+/* Ventana detrás del modal */
+.modal::backdrop {
+    backdrop-filter: blur(3px);
+}
+
+.modal__close {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.fa-rectangle-xmark {
+    font-size: 1.5rem;
+    color: var(--main-bg-color);
+}
+
+/* Form del modal */
+form {
+    display: flex;
+    font-size: 0.9rem;
+    padding: 0 10px;
+    flex-direction: column;
+    align-items: center;
+}
+
+form div {
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+}
+
+form label {
+    font-weight: bold;
+}
+
+form input {
+    border: none;
+    border-bottom: 2px solid var(--main-bg-color);
+    background-color: var(--bg-modal);
+}
+
+form button {
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 20px 0 10px 0;
+    width: 5rem;
+    height: 1.5rem;
+    border-radius: 10px;
+    background-color: var(--main-bg-color);
+    color: var(--text-primary-color);
+}
+
+/* Lista de contactos */
+.contact-list {
+    margin: 10%;
+}
+
+.contact {
+    list-style: none;
+    margin: 20px 0;
+    background-color: var(--bg-contact);
+    border-radius: 20px;
+    padding: 10px;
+}
