@@ -77,32 +77,49 @@ async function createContact() {
 		showContacts();
 	} else {
 		console.error("Error while creating contact");
-	}
+	};
+
+	const data = await response.json();
+	return data;
 }
 
 // UPDATE - method PUT - endpoint: http://localhost:3000/contacts/<id>
-async function updateContact(id, name, phone, email) {
+async function updateContact(id) {
+
+	const name = document.getElementById("nameContact");
+	const phone = document.getElementById("phoneContact");
+	const email = document.getElementById("emailContact");
+
 	const response = await fetch(`${URL_API}/${id}`, {
 		method: "PUT",
 		headers: {
 			"Content-Type": "application/json",
 		},
 		body: JSON.stringify({
-			name: name,
-			phone: phone,
-			email: email,
+			name: name.value,
+			phone: phone.value,
+			email: email.value,
 		}),
 	});
+
+	if (response.ok) {
+		// Limpiar el contenido de los input
+		name.value = "";
+		phone.value = "";
+		email.value = "";
+		showContacts();
+	} else {
+		console.error("Error while updating contact");
+	};
+
 	const data = await response.json();
-	console.log(data);
 	return data;
 }
-// updateContact(2, "Lulu", "1234", "lulu@mail.com")
 
 async function showContacts() {
 	// Seleccionar el elemento ul donde estarán cada contacto en element
 	const list = document.getElementById("contactList");
-	// list.innerHTML = "";
+	list.innerHTML = "";
 	
 	const contacts = await getAllContacts(); // Traer todos los contactos
 	// Recorrer la lista de contactos y mostrar cada uno de ellos
@@ -125,13 +142,61 @@ async function showContacts() {
                         <p class="contact__info-item">${contact.email}</p>
                     </div>
                     <div class="contact__info__buttons">
-                        <i class="fa-solid fa-square-pen fa-xl"></i>
+                        <i onclick="showEditContact('${contact.id}')" class="fa-solid fa-square-pen fa-xl"></i>
                         <i onclick="deleteContact('${contact.id}')" class="fa-solid fa-trash fa-lg"></i>
                     </div>
                 </details>
             </div>
         </li>
         `;
+	});
+}
+
+function showAddContact() {
+	// Esconder el botón de Actualizar contacto
+	const btnUpdateContact = document.getElementById("btnUpdateContact");
+	btnUpdateContact.style.display = "none";
+	// Mostrar el botón de Añadir contacto
+	const btnAddContact = document.getElementById("btnAddContact");
+	btnAddContact.style.display = "block";
+	// Mostrar modal con el form
+	window.modal.showModal();
+}
+
+async function showEditContact(id) {
+	// Obtener el contacto a editar
+	const contact = await getOneContact(id);
+	
+	const nameContact = document.getElementById("nameContact");
+	const phoneContact = document.getElementById("phoneContact");
+	const emailContact = document.getElementById("emailContact");
+
+	//Mostrar los datos del contacto en los input del form
+	nameContact.value = contact.name;
+	phoneContact.value = contact.phone;
+	emailContact.value = contact.email;
+
+	// Mostrar modal con el form
+	window.modal.showModal();
+
+	// Esconder el botón de Añadir contacto
+	const btnAddContact = document.getElementById("btnAddContact");
+	btnAddContact.style.display = "none";
+
+	// Mostrar el botón de Actualizar contacto
+	const btnUpdateContact = document.getElementById("btnUpdateContact");
+	btnUpdateContact.style.display = "block";
+
+	// Crear una copia del botón actualizar y reemplazar el anterior, eliminando así cualquier listener anterior
+	const newBtnUpdateContact = btnUpdateContact.cloneNode(true);
+    btnUpdateContact.parentNode.replaceChild(newBtnUpdateContact, btnUpdateContact);
+	
+	 // Añadir el nuevo listener
+	 // Se añade el nuevo listener solo después de eliminar el anterior, lo que garantiza que no haya múltiples listeners en el mismo botón.
+	newBtnUpdateContact.addEventListener('click', async (e) => {
+		e.preventDefault();
+		await updateContact(`${contact.id}`);
+		window.modal.close();
 	});
 }
 
