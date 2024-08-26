@@ -74,13 +74,13 @@ async function createContact() {
 	});
 
 	if (response.ok) {
+		createLabel(`¡Agregaste a ${name.value} a tu lista de contactos!🎉`);
 		// Limpiar el contenido de los input
 		name.value = "";
 		phone.value = "";
 		email.value = "";
 		group.value = "";
 		showContacts();
-		createLabel(`¡Agregaste a ${name.value} a tu lista de contactos!🎉`);
 	} else {
 		console.error("Error while creating contact");
 	};
