@@ -25,6 +25,11 @@ body {
     position: relative;
 }
 
+header {
+    position: sticky;
+    top: 0;
+}
+
 h1 {
     font-family: var(--text-title-font);
     text-align: center;
@@ -84,10 +89,31 @@ h1 {
     background-color: var(--bg-contact);
 }
 
+/* Buscador de contactos */
+.finder {
+    display: flex;
+}
+
+#contentFinder {
+    width: 100%;
+    font-size: 1rem;
+}
+
+.finder button {
+    background-color: var(--bg-color-1);
+    color: var(--text-primary-color);
+    width: 50px;
+    height: 30px;
+}
+
+input {
+    padding-left: 3px;
+}
+
 /* Etiqueta que muestra un mensaje al crear, actualiza o eliminar un contacto */
 .message-label p {
-    margin: 50px auto 0 auto;
-    width: 80%;
+    margin: auto;
+    /* width: 80%; */
     text-align: center;
     background-color: var(--bg-modal);
     color: var(--main-bg-color);
