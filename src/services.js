@@ -152,8 +152,7 @@ async function showContacts(contacts = null) {
                         <p class="contact__info-item">${contact.email}</p>
                     </div>
 					<div>
-                        <p class="contact__item-tag">Grupo:</p>
-                        <p class="contact__info-item">${contact.group}</p>
+						${contact.group ? `<p class="contact__item-tag">Grupo:</p><p class="contact__info-item">${contact.group}</p>` : ""}
                     </div>
                     <div class="contact__info__buttons">
                         <i onclick="showEditContact('${contact.id}')" class="fa-solid fa-square-pen fa-xl"></i>
@@ -163,6 +162,9 @@ async function showContacts(contacts = null) {
             </div>
         </li>
         `;
+		// Nota: Al usar un operador ternario (? :) directamente dentro del template, se asegura que la información del grupo se agregue correctamente al innerHTML de cada contacto en el momento en que se está generando.
+		// Si la condición es verdadera (es decir, contact.group tiene un valor), el bloque de código HTML del grupo se inserta dentro del <div>.
+		// Si la condición es falsa (es decir, contact.group está vacío o es null), no se inserta nada dentro del <div> (se inserta una cadena vacía "").
 	});
 }
 
