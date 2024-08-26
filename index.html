@@ -17,15 +17,16 @@
                     Filtrar
                     <i class="fa-solid fa-people-group"></i>
                     <ul id="filterMenu" class="menu__filter__dropdown">
-                        <li onclick="filterByGroup('all')">Todos</li>
                         <li onclick="filterByGroup('Familia')">Familia</li>
                         <li onclick="filterByGroup('Amigos')">Amigos</li>
                         <li onclick="filterByGroup('Trabajo')">Trabajo</li>
+                        <li onclick="filterByGroup('all')">Todos</li>
                     </ul>
                 </li>
             </ul>
         </nav>
     </header>
+    <div id="messageLabel" class="message-label"></div>
     <dialog class="modal" id="modal">
         <div class="modal__close">
             <i class="fa-solid fa-rectangle-xmark" onclick="window.modal.close()"></i>
@@ -37,11 +38,11 @@
             </div>
             <div>
                 <label for="phoneContact">Teléfono:</label>
-                <input type="text" name="phoneContact" id="phoneContact">
+                <input type="number" name="phoneContact" id="phoneContact">
             </div>
             <div>
                 <label for="emailContact">Correo eletrónico:</label>
-                <input type="text" name="emailContact" id="emailContact">
+                <input type="email" name="emailContact" id="emailContact">
             </div>
             <div class="group-contact">
                 <label for="groupContact">Grupo:</label>

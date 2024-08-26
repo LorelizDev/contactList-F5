@@ -76,19 +76,32 @@ h1 {
     border-top: 1px solid #f2f2f25e;
 }
 
+.menu__filter__dropdown li:last-child {
+    background-color: var(--bg-color-2);
+}
+
 .menu__filter__dropdown li:hover {
     background-color: var(--bg-contact);
+}
+
+/* Etiqueta que muestra un mensaje al crear, actualiza o eliminar un contacto */
+.message-label p {
+    margin: 50px auto 0 auto;
+    width: 80%;
+    text-align: center;
+    background-color: var(--bg-modal);
+    color: var(--main-bg-color);
+    border-left: 10px solid var(--bg-color-3);
+    font-size: 0.9rem;
+    border-radius: 5px;
 }
 
 /* Cuadro pop-up */
 .modal {
     position: absolute;
-    top: 20vh;
-    left: 20vw;
-    /* top: calc(50vh - 150px/2);
-    left: calc(50vw - 280px/2);
-    height: 150px;
-    width: 280px; */
+    top: 30vh;
+    left: calc(50vw - 240px/2);
+    width: 240px;
     padding: 5px 5px 10px 10px;
     background-color: var(--bg-modal);
     border: 1px solid var(--main-bg-color);
@@ -107,7 +120,7 @@ h1 {
 }
 
 .fa-rectangle-xmark {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     color: var(--main-bg-color);
 }
 
@@ -141,7 +154,7 @@ form input {
     flex-direction: row;
     gap: 10px;
     width: 100%;
-    margin-left: 15px;
+    padding-left: 10%;
 }
 
 form button {
@@ -157,7 +170,7 @@ form button {
 
 /* Lista de contactos */
 .contact-list {
-    margin: 10%;
+    margin: 50px 10%;
 }
 
 .contact {

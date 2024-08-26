@@ -30,6 +30,7 @@ async function getOneContact(id) {
 async function deleteContact(id) {
 	// Obtener el contacto a eliminar
 	const contact = await getOneContact(id);
+	let text; // Texto que aparecerá en la etiqueta al hacer una acción
 
 	// Crear un cuadro de confirmación
 	const textConfirm = `¿Estás seguro de eliminar a ${contact.name} de tus contactos?`;
@@ -45,10 +46,11 @@ async function deleteContact(id) {
         } else {
             console.error("Error while deleting contact");
         }
-		console.log(`${contact.name} ya no se encuentra entre tus contactos`);
+		text = `${contact.name} ya no se encuentra entre tus contactos😢`;
 	} else {
-		console.log(`Decidiste darle otra oportunidad a ${contact.name}`);
+		text = `¡Decidiste darle otra oportunidad a ${contact.name}!😀`;
 	}
+	createLabel(text);
 }
 
 // CREATE - method POST - endpoint: http://localhost:3000/contacts
@@ -78,6 +80,7 @@ async function createContact() {
 		email.value = "";
 		group.value = "";
 		showContacts();
+		createLabel(`¡Agregaste a ${name.value} a tu lista de contactos!🎉`);
 	} else {
 		console.error("Error while creating contact");
 	};
@@ -108,6 +111,7 @@ async function updateContact(id) {
 	});
 
 	if (response.ok) {
+		createLabel(`¡Actualizaste la información de ${name.value}!✨`);
 		// Limpiar el contenido de los input
 		name.value = "";
 		phone.value = "";
@@ -237,6 +241,18 @@ async function filterByGroup(group) {
 	}
 
 	showContacts(filteredContacts);
+}
+
+// Etiqueta de información al hacer una acción, ejemplo: crear o borrar un contacto
+function createLabel(text) {
+	const label = document.getElementById("messageLabel")
+	const contentLabel = document.createElement('p');
+	contentLabel.textContent = text;
+	label.appendChild(contentLabel);
+
+	setTimeout(() => {
+		contentLabel.remove();
+	}, 4000);
 }
 
 // Inicializar contactos al cargar la página
