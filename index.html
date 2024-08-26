@@ -13,7 +13,16 @@
         <nav>
             <ul class="menu">
                 <li class="menu__add" onclick="showAddContact()">Añadir <i class="fa-solid fa-user-plus"></i></li>
-                <li class="menu__filter">Filtrar <i class="fa-solid fa-people-group"></i></li>
+                <li class="menu__filter" onclick="toggleFilterMenu()">
+                    Filtrar
+                    <i class="fa-solid fa-people-group"></i>
+                    <ul id="filterMenu" class="menu__filter__dropdown">
+                        <li onclick="filterByGroup('all')">Todos</li>
+                        <li onclick="filterByGroup('Familia')">Familia</li>
+                        <li onclick="filterByGroup('Amigos')">Amigos</li>
+                        <li onclick="filterByGroup('Trabajo')">Trabajo</li>
+                    </ul>
+                </li>
             </ul>
         </nav>
     </header>
@@ -33,6 +42,16 @@
             <div>
                 <label for="emailContact">Correo eletrónico:</label>
                 <input type="text" name="emailContact" id="emailContact">
+            </div>
+            <div class="group-contact">
+                <label for="groupContact">Grupo:</label>
+                <select name="groupContact" id="groupContact">
+                    <option value=""></option>
+                    <option value="Familia">Familia</option>
+                    <option value="Amigos">Amigos</option>
+                    <option value="Trabajo">Trabajo</option>
+                </select>
+                <!-- <input type="text" name="emailContact" id="emailContact"> -->
             </div>
             <button type="button" id="btnAddContact" onclick="createContact(); window.modal.close();">Añadir</button>
             <button type="button" id="btnUpdateContact">Actualizar</button>

@@ -56,6 +56,7 @@ async function createContact() {
 	const name = document.getElementById("nameContact");
 	const phone = document.getElementById("phoneContact");
 	const email = document.getElementById("emailContact");
+	const group = document.getElementById("groupContact");
 
 	const response = await fetch(URL_API, {
 		method: "POST",
@@ -66,6 +67,7 @@ async function createContact() {
 			name: name.value, // Contenido del input
 			phone: phone.value,
 			email: email.value,
+			group: group.value,
 		}),
 	});
 
@@ -74,6 +76,7 @@ async function createContact() {
 		name.value = "";
 		phone.value = "";
 		email.value = "";
+		group.value = "";
 		showContacts();
 	} else {
 		console.error("Error while creating contact");
@@ -89,6 +92,7 @@ async function updateContact(id) {
 	const name = document.getElementById("nameContact");
 	const phone = document.getElementById("phoneContact");
 	const email = document.getElementById("emailContact");
+	const group = document.getElementById("groupContact");
 
 	const response = await fetch(`${URL_API}/${id}`, {
 		method: "PUT",
@@ -99,6 +103,7 @@ async function updateContact(id) {
 			name: name.value,
 			phone: phone.value,
 			email: email.value,
+			group: group.value,
 		}),
 	});
 
@@ -107,6 +112,7 @@ async function updateContact(id) {
 		name.value = "";
 		phone.value = "";
 		email.value = "";
+		group.value = "";
 		showContacts();
 	} else {
 		console.error("Error while updating contact");
@@ -116,12 +122,16 @@ async function updateContact(id) {
 	return data;
 }
 
-async function showContacts() {
+async function showContacts(contacts = null) {
 	// Seleccionar el elemento ul donde estarán cada contacto en element
 	const list = document.getElementById("contactList");
 	list.innerHTML = "";
 	
-	const contacts = await getAllContacts(); // Traer todos los contactos
+	// Si no se proporcionan contactos, se obtiene la lista completa
+	if (!contacts) {
+		contacts = await getAllContacts();
+	}
+
 	// Recorrer la lista de contactos y mostrar cada uno de ellos
 	contacts.map((contact) => {
 		// Plantilla de cada contacto
@@ -140,6 +150,10 @@ async function showContacts() {
                     <div>
                         <p class="contact__item-tag">Correo electrónico:</p>
                         <p class="contact__info-item">${contact.email}</p>
+                    </div>
+					<div>
+                        <p class="contact__item-tag">Grupo:</p>
+                        <p class="contact__info-item">${contact.group}</p>
                     </div>
                     <div class="contact__info__buttons">
                         <i onclick="showEditContact('${contact.id}')" class="fa-solid fa-square-pen fa-xl"></i>
@@ -170,11 +184,13 @@ async function showEditContact(id) {
 	const nameContact = document.getElementById("nameContact");
 	const phoneContact = document.getElementById("phoneContact");
 	const emailContact = document.getElementById("emailContact");
+	const groupContact = document.getElementById("groupContact");
 
 	//Mostrar los datos del contacto en los input del form
 	nameContact.value = contact.name;
 	phoneContact.value = contact.phone;
 	emailContact.value = contact.email;
+	groupContact.value = contact.group;
 
 	// Mostrar modal con el form
 	window.modal.showModal();
@@ -200,4 +216,26 @@ async function showEditContact(id) {
 	});
 }
 
+// Función para mostrar/ocultar el menú de filtrado
+function toggleFilterMenu() {
+    const filterMenu = document.getElementById("filterMenu");
+	filterMenu.style.display = filterMenu.style.display === "block" ? "none" : "block";
+}
+
+// Función para filtrar contactos por grupo
+async function filterByGroup(group) {
+	const contacts = await getAllContacts();
+
+	let filteredContacts;
+
+	if (group === "all") {
+		filteredContacts = contacts; // Mostrar todos los contactos si se selecciona 'Todos'
+	} else {
+		filteredContacts = contacts.filter(contact => contact.group === group);
+	}
+
+	showContacts(filteredContacts);
+}
+
+// Inicializar contactos al cargar la página
 showContacts();

@@ -6,6 +6,9 @@
     --bg-modal: #fefae0;
     --bg-contact: #F4A261;
     --text-primary-color: #f2f2f2;
+    --bg-color-1: #E76F51;
+    --bg-color-2: #2A9D8F;
+    --bg-color-3: #E9C46A;
 }
 
 * {
@@ -27,7 +30,7 @@ h1 {
     text-align: center;
     padding: 20px;
     font-size: 1.8rem;
-    background-color: #E76F51;
+    background-color: var(--bg-color-1);
 }
 
 /* Estilo de navbar */
@@ -42,14 +45,39 @@ h1 {
     width: 100%;
     text-align: center;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .menu__add {
-    background-color: #2A9D8F;
+    background-color: var(--bg-color-2);
 }
 
 .menu__filter {
-    background-color: #E9C46A;
+    background-color: var(--bg-color-3);
+    position: relative;
+}
+
+.menu__filter__dropdown {
+    display: none; /* Ocultar el menú por defecto */
+    position: absolute;
+    right: 0;
+    top: calc(40px + 1rem); /* 20px de padding top y 20 de padding bottom + el tamaño de la letra */
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 10; /* Asegura que el menú esté sobre otros elementos */
+    list-style-type: none;
+    margin-top: 5px;
+    width: 100%;
+    background-color: var(--bg-color-1);
+}
+
+.menu__filter__dropdown li {
+    padding: 8px 16px;
+    border-top: 1px solid #f2f2f25e;
+}
+
+.menu__filter__dropdown li:hover {
+    background-color: var(--bg-contact);
 }
 
 /* Cuadro pop-up */
@@ -108,6 +136,14 @@ form input {
     background-color: var(--bg-modal);
 }
 
+.group-contact {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    width: 100%;
+    margin-left: 15px;
+}
+
 form button {
     font-size: 1rem;
     font-weight: bold;
@@ -133,6 +169,10 @@ form button {
     padding: 10px;
     min-height: 60px;
     align-items: center;
+}
+
+.contact:hover {
+    background-color: var(--bg-color-1);
 }
 
 .contact__avatar {
@@ -175,6 +215,6 @@ details div {
     gap: 10px;
 }
 
-.fa-solid {
+.fa-square-pen, .fa-trash {
     cursor: pointer;
 }

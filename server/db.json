@@ -4,31 +4,50 @@
       "id": "1",
       "name": "Pedro",
       "phone": "123456789",
-      "email": "pedro@example.com"
+      "email": "pedro@example.com",
+      "group": "Amigos"
     },
     {
       "id": "2",
       "name": "Luis",
       "phone": "987654321",
-      "email": "luis@example.com"
+      "email": "luis@example.com",
+      "group": "Familia"
     },
     {
       "id": "e76b",
       "name": "Lorena",
       "phone": "234435",
-      "email": "lorena@example.com"
+      "email": "lorena@example.com",
+      "group": "Familia"
     },
     {
       "id": "b29a",
       "name": "Lula",
       "phone": "43567",
-      "email": "lula@example.com"
+      "email": "lula@example.com",
+      "group": "Trabajo"
     },
     {
-      "id": "62cb",
       "name": "Pepe",
       "phone": "4356754",
-      "email": "pepe@exmple.com"
+      "email": "pepe@example.com",
+      "group": "Trabajo",
+      "id": "62cb"
+    },
+    {
+      "name": "Lisa",
+      "phone": "3243543",
+      "email": "tgrdfg b",
+      "group": "",
+      "id": "eec6"
+    },
+    {
+      "name": "Khai",
+      "phone": "12345567",
+      "email": "khai@example.com",
+      "group": "Amigos",
+      "id": "8e1b"
     }
   ]
 }
