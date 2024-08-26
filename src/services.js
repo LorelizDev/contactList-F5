@@ -255,5 +255,33 @@ function createLabel(text) {
 	}, 4000);
 }
 
+// Función para buscar un contacto
+async function findContact() {
+	const searchInput = document.getElementById("contentFinder");
+	const contentFinder = searchInput.value;
+
+	const contacts = await getAllContacts();
+
+	// Filtrar los contactos que coinciden con la búsqueda
+    const filteredContacts = contacts.filter(contact => 
+        contact.name.includes(contentFinder) || 
+        contact.phone.includes(contentFinder) || 
+        contact.email.includes(contentFinder)
+    );
+
+	// Verificar si hay contactos filtrados
+    if (filteredContacts.length > 0) {
+		// Mostrar los contactos filtrados
+        showContacts(filteredContacts);
+    } else {
+        // Mostrar el mensaje de que no se encontró ningún contacto
+        createLabel("Lo siento. No se encontró ningún contacto🤷");
+		showContacts();
+    }
+
+	// Limpiar el input después de la búsqueda
+	searchInput.value = "";
+}
+
 // Inicializar contactos al cargar la página
 showContacts();
