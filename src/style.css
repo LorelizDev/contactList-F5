@@ -18,12 +18,19 @@
     box-sizing: border-box;
 }
 
+html {
+    background-color: rgb(10, 9, 27);
+}
+
 body {
     background-color: var(--main-bg-color);
     color: var(--text-primary-color);
     font-family: var(--text-primary-font);
     font-size: 18px;
     position: relative;
+    max-width: 480px;
+    margin: auto;
+    padding-bottom: 30px;
 }
 
 header {
