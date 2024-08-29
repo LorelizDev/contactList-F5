@@ -258,6 +258,7 @@ summary {
 
 .contact__info-item {
     font-weight: bold;
+    word-wrap: break-word;
 }
 
 details div {

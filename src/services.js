@@ -50,7 +50,7 @@ async function deleteContact(id) {
 	} else {
 		text = `¡Decidiste darle otra oportunidad a ${contact.name}!😀`;
 	}
-	createLabel(text);
+	createLabel(text, "messageContact");
 }
 
 // CREATE - method POST - endpoint: http://localhost:3000/contacts
@@ -76,13 +76,13 @@ async function createContact() {
 
 	if (response.ok) {
 		text = `¡Agregaste a ${name.value} a tu lista de contactos!🎉`
-		createLabel(text);
+		createLabel(text, "messageContact");
 		// Limpiar el contenido de los input
 		cleanForm();
 		showContacts();
 	} else {
 		text = `No se pudo agregar a ${name.value} a tus contactos!🤔`
-		createLabel(text);
+		createLabel(text, "messageContact");
 		console.error("Error while creating contact");
 	};
 
@@ -112,7 +112,9 @@ async function updateContact(id) {
 	});
 
 	if (response.ok) {
-		createLabel(`¡Actualizaste la información de ${name.value}!✨`);
+		createLabel(`¡Actualizaste la información de ${name.value}!✨`, "messageContact")
+		// Limpiar el contenido de los input
+		cleanForm();
 		showContacts();
 	} else {
 		console.error("Error while updating contact");
@@ -144,12 +146,10 @@ async function showContacts(contacts = null) {
                 <details>
                     <summary>${contact.name}</summary>
                     <div>
-                        <p class="contact__item-tag">Teléfono:</p>
-                        <p class="contact__info-item">${contact.phone}</p>
+					${contact.phone ? `<p class="contact__item-tag">Teléfono:</p><p class="contact__info-item">${contact.phone}</p>` : ""}
                     </div>
                     <div>
-                        <p class="contact__item-tag">Correo electrónico:</p>
-                        <p class="contact__info-item">${contact.email}</p>
+					${contact.email ? `<p class="contact__item-tag">Correo electrónico:</p><p class="contact__info-item">${contact.email}</p>` : ""}
                     </div>
 					<div>
 						${contact.group ? `<p class="contact__item-tag">Grupo:</p><p class="contact__info-item">${contact.group}</p>` : ""}
@@ -180,43 +180,85 @@ function showAddContact() {
 }
 
 async function showEditContact(id) {
-	// Obtener el contacto a editar
-	const contact = await getOneContact(id);
-	
-	const nameContact = document.getElementById("nameContact");
-	const phoneContact = document.getElementById("phoneContact");
-	const emailContact = document.getElementById("emailContact");
-	const groupContact = document.getElementById("groupContact");
+    // Obtener el contacto a editar
+    const contact = await getOneContact(id);
+    
+    const nameContact = document.getElementById("nameContact");
+    const phoneContact = document.getElementById("phoneContact");
+    const emailContact = document.getElementById("emailContact");
+    const groupContact = document.getElementById("groupContact");
 
-	//Mostrar los datos del contacto en los input del form
-	nameContact.value = contact.name;
-	phoneContact.value = contact.phone;
-	emailContact.value = contact.email;
-	groupContact.value = contact.group;
+    // Mostrar los datos del contacto en los input del form
+    nameContact.value = contact.name;
+    phoneContact.value = contact.phone;
+    emailContact.value = contact.email;
+    groupContact.value = contact.group;
 
-	// Mostrar modal con el form
-	window.modal.showModal();
+    // Mostrar modal con el form
+    window.modal.showModal();
 
-	// Esconder el botón de Añadir contacto
-	const btnAddContact = document.getElementById("btnAddContact");
-	btnAddContact.style.display = "none";
+    // Esconder el botón de Añadir contacto
+    const btnAddContact = document.getElementById("btnAddContact");
+    btnAddContact.style.display = "none";
 
-	// Mostrar el botón de Actualizar contacto
-	const btnUpdateContact = document.getElementById("btnUpdateContact");
-	btnUpdateContact.style.display = "block";
+    // Mostrar el botón de Actualizar contacto
+    const btnUpdateContact = document.getElementById("btnUpdateContact");
+    btnUpdateContact.style.display = "block";
 
-	// Crear una copia del botón actualizar y reemplazar el anterior, eliminando así cualquier listener anterior
-	const newBtnUpdateContact = btnUpdateContact.cloneNode(true);
+    // Guardar el ID del contacto en un atributo de datos del botón
+    btnUpdateContact.dataset.contactId = id;
+
+    // Crear una copia del botón actualizar y reemplazar el anterior, eliminando así cualquier listener anterior
+    const newBtnUpdateContact = btnUpdateContact.cloneNode(true);
     btnUpdateContact.parentNode.replaceChild(newBtnUpdateContact, btnUpdateContact);
-	
-	 // Añadir el nuevo listener
-	 // Se añade el nuevo listener solo después de eliminar el anterior, lo que garantiza que no haya múltiples listeners en el mismo botón.
-	newBtnUpdateContact.addEventListener('click', async (e) => {
-		e.preventDefault();
-		await updateContact(`${contact.id}`);
-		cleanForm();
-		window.modal.close();
-	});
+    
+    // Añadir el listener para validar y actualizar
+    newBtnUpdateContact.addEventListener('click', (e) => {
+        e.preventDefault();
+        validateForm('update');
+    });
+}
+
+// Función para validar el formulario
+function validateForm(action) {
+    const name = document.getElementById("nameContact").value.trim();
+    const phone = document.getElementById("phoneContact").value.trim();
+    const email = document.getElementById("emailContact").value.trim();
+    
+    // Validación del campo de nombre
+    if (name === "") {
+        createLabel("El nombre es requerido. Por favor, ingrésalo.", "messageForm");
+        return;
+    }
+    
+    // Validación del campo de teléfono (solo números y símbolo +)
+    if (phone !== "") {
+		const phonePattern = /^\+?\d+$/;
+		if (!phonePattern.test(phone)) {
+			createLabel("El teléfono debe comenzar con un símbolo + opcional seguido solo de números.", "messageForm");
+			return;
+		}
+	}
+
+    // Validación del campo de correo electrónico (formato válido de email)
+    if (email !== "") {
+		const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		if (!emailPattern.test(email)) {
+			createLabel("Por favor, ingresa un correo electrónico válido.", "messageForm");
+			return;
+		}
+	}
+
+    // Si la validación es exitosa, proceder con la acción
+    if (action === 'add') {
+        createContact();
+    } else if (action === 'update') {
+        const contactId = document.getElementById("btnUpdateContact").dataset.contactId;
+        updateContact(contactId);
+    }
+    
+    // Cerrar el modal
+    window.modal.close();
 }
 
 // Función para limpiar el formulario
@@ -249,8 +291,8 @@ async function filterByGroup(group) {
 }
 
 // Etiqueta de información al hacer una acción, ejemplo: crear o borrar un contacto
-function createLabel(text) {
-	const label = document.getElementById("messageLabel")
+function createLabel(text, labelId) {
+	const label = document.getElementById(labelId)
 	const contentLabel = document.createElement('p');
 	contentLabel.textContent = text;
 	label.appendChild(contentLabel);
@@ -280,7 +322,7 @@ async function findContact() {
         showContacts(filteredContacts);
     } else {
         // Mostrar el mensaje de que no se encontró ningún contacto
-        createLabel("Lo siento. No se encontró ningún contacto🤷");
+        createLabel("Lo siento. No se encontró ningún contacto🤷", "messageContact");
 		showContacts();
     }
 

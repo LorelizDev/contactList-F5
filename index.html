@@ -29,7 +29,7 @@
             <input type="text" name="contentFinder" id="contentFinder" placeholder="Buscar contacto">
             <button onclick="findContact()" class="finder__btn"><i class="fa-solid fa-magnifying-glass"></i></button>
         </div>
-        <div id="messageLabel" class="message-label"></div>
+        <div id="messageContact" class="message-label"></div>
     </header>
     <dialog class="modal" id="modal">
         <div class="modal__close">
@@ -42,7 +42,7 @@
             </div>
             <div>
                 <label for="phoneContact">Teléfono:</label>
-                <input type="number" name="phoneContact" id="phoneContact">
+                <input name="phoneContact" id="phoneContact">
             </div>
             <div>
                 <label for="emailContact">Correo eletrónico:</label>
@@ -57,7 +57,8 @@
                     <option value="Trabajo">Trabajo</option>
                 </select>
             </div>
-            <button class="modal__btn" type="button" id="btnAddContact" onclick="createContact(); window.modal.close();">Añadir</button>
+            <div id="messageForm" class="message-label"></div>
+            <button class="modal__btn" type="button" id="btnAddContact" onclick="validateForm('add');">Añadir</button>
             <button class="modal__btn" type="button" id="btnUpdateContact">Actualizar</button>
         </form>
     </dialog>

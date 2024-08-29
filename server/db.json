@@ -1,60 +1,67 @@
 {
   "contacts": [
     {
-      "name": "Pedro",
-      "phone": "123456789",
-      "email": "pedro@example.com",
-      "group": "Trabajo",
-      "id": "1"
-    },
-    {
-      "id": "2",
-      "name": "Luis",
-      "phone": "987654321",
-      "email": "luis@example.com",
-      "group": "Familia"
-    },
-    {
-      "id": "e76b",
-      "name": "Lorena",
-      "phone": "234435",
-      "email": "lorena@example.com",
-      "group": "Familia"
-    },
-    {
-      "id": "b29a",
-      "name": "Lula",
-      "phone": "43567",
-      "email": "lula@example.com",
+      "id": "1",
+      "name": "John Doe",
+      "phone": "5551234567",
+      "email": "johndoe@example.com",
       "group": "Trabajo"
     },
     {
-      "name": "Pepe",
-      "phone": "4356754",
-      "email": "pepe@example.com",
-      "group": "Trabajo",
-      "id": "62cb"
+      "id": "2",
+      "name": "Jane Smith",
+      "phone": "5552345678",
+      "email": "janesmith@example.com",
+      "group": "Trabajo"
     },
     {
-      "name": "Lisa",
-      "phone": "3243543",
-      "email": "tgrdfg b",
-      "group": "",
-      "id": "eec6"
+      "id": "3",
+      "name": "Carlos Ruiz",
+      "phone": "5553456789",
+      "email": "carlosruiz@example.com",
+      "group": "Familia"
     },
     {
-      "name": "Khai",
-      "phone": "12345567",
-      "email": "khai@example.com",
-      "group": "Amigos",
-      "id": "8e1b"
+      "id": "4",
+      "name": "Maria Garcia",
+      "phone": "5554567890",
+      "email": "mariagarcia@example.com",
+      "group": "Familia"
     },
     {
-      "id": "f948",
-      "name": "lila",
-      "phone": "324435",
-      "email": "rtsafd",
-      "group": ""
+      "id": "5",
+      "name": "Ling Wong",
+      "phone": "5555678901",
+      "email": "lingwong@example.com",
+      "group": "Trabajo"
+    },
+    {
+      "id": "6",
+      "name": "Pierre Dupont",
+      "phone": "5556789012",
+      "email": "pierredupont@example.com",
+      "group": "Amigos"
+    },
+    {
+      "id": "7",
+      "name": "Angela Müller",
+      "phone": "5557890123",
+      "email": "angelamuller@example.com",
+      "group": "Trabajo"
+    },
+    {
+      "id": "8",
+      "name": "Yuki Tanaka",
+      "phone": "5558901234",
+      "email": "yukitanaka@example.com",
+      "group": "Amigos"
+    },
+    {
+      "id": "9",
+      "name": "Omar Al-Farsi",
+      "phone": "5559012345",
+      "email": "omaralfarsi@example.com",
+      "group": "Amigos"
     }
   ]
 }
