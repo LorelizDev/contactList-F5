@@ -59,6 +59,7 @@ async function createContact() {
 	const phone = document.getElementById("phoneContact");
 	const email = document.getElementById("emailContact");
 	const group = document.getElementById("groupContact");
+	let text;
 
 	const response = await fetch(URL_API, {
 		method: "POST",
@@ -74,14 +75,14 @@ async function createContact() {
 	});
 
 	if (response.ok) {
-		createLabel(`¡Agregaste a ${name.value} a tu lista de contactos!🎉`);
+		text = `¡Agregaste a ${name.value} a tu lista de contactos!🎉`
+		createLabel(text);
 		// Limpiar el contenido de los input
-		name.value = "";
-		phone.value = "";
-		email.value = "";
-		group.value = "";
+		cleanForm();
 		showContacts();
 	} else {
+		text = `No se pudo agregar a ${name.value} a tus contactos!🤔`
+		createLabel(text);
 		console.error("Error while creating contact");
 	};
 
@@ -112,11 +113,6 @@ async function updateContact(id) {
 
 	if (response.ok) {
 		createLabel(`¡Actualizaste la información de ${name.value}!✨`);
-		// Limpiar el contenido de los input
-		name.value = "";
-		phone.value = "";
-		email.value = "";
-		group.value = "";
 		showContacts();
 	} else {
 		console.error("Error while updating contact");
@@ -159,8 +155,8 @@ async function showContacts(contacts = null) {
 						${contact.group ? `<p class="contact__item-tag">Grupo:</p><p class="contact__info-item">${contact.group}</p>` : ""}
                     </div>
                     <div class="contact__info__buttons">
-                        <i onclick="showEditContact('${contact.id}')" class="fa-solid fa-square-pen fa-xl"></i>
-                        <i onclick="deleteContact('${contact.id}')" class="fa-solid fa-trash fa-lg"></i>
+                        <button class="btn-icon" onclick="showEditContact('${contact.id}')"><i class="fa-solid fa-square-pen fa-xl"></i></button>
+                        <button class="btn-icon" onclick="deleteContact('${contact.id}')"><i class="fa-solid fa-trash fa-lg"></i></button>
                     </div>
                 </details>
             </div>
@@ -218,8 +214,17 @@ async function showEditContact(id) {
 	newBtnUpdateContact.addEventListener('click', async (e) => {
 		e.preventDefault();
 		await updateContact(`${contact.id}`);
+		cleanForm();
 		window.modal.close();
 	});
+}
+
+// Función para limpiar el formulario
+function cleanForm() {
+	document.getElementById("nameContact").value = "";
+	document.getElementById("phoneContact").value = "";
+	document.getElementById("emailContact").value = "";
+	document.getElementById("groupContact").value = "";
 }
 
 // Función para mostrar/ocultar el menú de filtrado
@@ -264,9 +269,9 @@ async function findContact() {
 
 	// Filtrar los contactos que coinciden con la búsqueda
     const filteredContacts = contacts.filter(contact => 
-        contact.name.includes(contentFinder) || 
-        contact.phone.includes(contentFinder) || 
-        contact.email.includes(contentFinder)
+        contact.name.toLowerCase().includes(contentFinder.toLowerCase()) || 
+        contact.phone.toLowerCase().includes(contentFinder.toLowerCase()) || 
+        contact.email.toLowerCase().includes(contentFinder.toLowerCase())
     );
 
 	// Verificar si hay contactos filtrados

@@ -9,6 +9,7 @@
     --bg-color-1: #E76F51;
     --bg-color-2: #2A9D8F;
     --bg-color-3: #E9C46A;
+    --bg-btn-hover: #264653d7;
 }
 
 * {
@@ -89,6 +90,10 @@ h1 {
     background-color: var(--bg-contact);
 }
 
+.menu__filter__dropdown li:last-child:hover {
+    background-color: #699892;
+}
+
 /* Buscador de contactos */
 .finder {
     display: flex;
@@ -99,11 +104,16 @@ h1 {
     font-size: 1rem;
 }
 
-.finder button {
+.finder__btn {
     background-color: var(--bg-color-1);
     color: var(--text-primary-color);
     width: 50px;
     height: 30px;
+    cursor: pointer;
+}
+
+.finder__btn:hover {
+    background-color: var(--bg-contact);
 }
 
 input {
@@ -150,6 +160,10 @@ input {
     color: var(--main-bg-color);
 }
 
+.fa-rectangle-xmark:hover {
+    color: var(--bg-btn-hover);
+}
+
 /* Form del modal */
 form {
     display: flex;
@@ -183,7 +197,7 @@ form input {
     padding-left: 10%;
 }
 
-form button {
+.modal__btn {
     font-size: 1rem;
     font-weight: bold;
     margin: 20px 0 10px 0;
@@ -192,6 +206,10 @@ form button {
     background-color: var(--main-bg-color);
     color: var(--text-primary-color);
     cursor: pointer;
+}
+
+.modal__btn:hover {
+    background-color: var(--bg-btn-hover);
 }
 
 /* Lista de contactos */
@@ -250,10 +268,17 @@ details div {
     display: flex;
     justify-content: flex-end;
     padding: 10px;
-    color: var(--main-bg-color);
     gap: 10px;
 }
 
-.fa-square-pen, .fa-trash {
+.btn-icon {
     cursor: pointer;
+    background-color: transparent;
+    border: none;
+    color: var(--main-bg-color);
+    font-size: 1.2rem;
+}
+
+.btn-icon:hover, .btn-icon:hover {
+    color: var(--bg-btn-hover);
 }

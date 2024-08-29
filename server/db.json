@@ -1,11 +1,11 @@
 {
   "contacts": [
     {
-      "id": "1",
       "name": "Pedro",
       "phone": "123456789",
       "email": "pedro@example.com",
-      "group": "Amigos"
+      "group": "Trabajo",
+      "id": "1"
     },
     {
       "id": "2",
@@ -48,6 +48,13 @@
       "email": "khai@example.com",
       "group": "Amigos",
       "id": "8e1b"
+    },
+    {
+      "id": "f948",
+      "name": "lila",
+      "phone": "324435",
+      "email": "rtsafd",
+      "group": ""
     }
   ]
 }
